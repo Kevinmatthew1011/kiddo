@@ -1,7 +1,7 @@
 
 // Countdown timer
 const countdownElement = document.getElementById('countdown');
-const targetDate = new Date('2024-12-25T00:00:00'); // Example target date
+const targetDate = new Date('2024-11-30T00:00:00'); // Example target date
 
 function updateCountdown() {
     const now = new Date();
