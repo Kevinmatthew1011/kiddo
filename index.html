@@ -4,19 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday!</title>
+    <title>Happy Birthday</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Happy Birthday Papa!!!! 🎉</h1>
+        <h1>Happy Birthday Papa!!!</h1>
         <div id="countdown"></div>
         <div class="photo-frame">
-            <img id="placeholder" src="default-photo.jpg" alt="Uploaded photo" />
-            <p>Click to replace the photo!</p>
+            <img src="photo.jpg" alt="Uploaded photo" id="photo" onclick="document.getElementById('fileInput').click();">
+            <p>Click to upload a new photo</p>
         </div>
-        <input type="file" id="photo-upload" accept="image/*" style="display: none;" />
+        <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="loadPhoto(event)">
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // Countdown Timer
+        function countdownTimer() {
+            const targetDate = new Date("2024-11-30T00:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = `🎉 ${days}d ${hours}h ${minutes}m ${seconds}s 🎉`;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "🎉 It's Your Day! 🎉";
+            }
+        }
+        setInterval(countdownTimer, 1000);
+
+        // Photo Upload Functionality
+        function loadPhoto(event) {
+            const photo = document.getElementById('photo');
+            photo.src = URL.createObjectURL(event.target.files[0]);
+            photo.onload = () => URL.revokeObjectURL(photo.src); // Free memory
+        }
+    </script>
 </body>
 </html>
